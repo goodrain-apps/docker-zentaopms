@@ -65,7 +65,7 @@ RUN sed -i -r 's/(post_max_size) =.*/\1 = 50M/' $PHP_CONFIG && \
     sed -i -r 's/; (max_input_vars) =.*/\1 = 3000/' $PHP_CONFIG
 
 # download tendaocms
-RUN curl -s -fSL $LAST_RELEASE_URL -o /tmp/$LAST_FILENAME && \
+RUN curl -s -fSL $LAST_RELEASE_URL -o /tmp/$LAST_RELEASE_FILENAME && \
     cd /tmp && unzip $LAST_RELEASE_FILENAME && \
     rm -rf /var/www/localhost/htdocs/* && \
     mv zendaopms/* /var/www/localhost/htdocs/ && \
