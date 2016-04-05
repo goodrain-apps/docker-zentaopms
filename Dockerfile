@@ -66,9 +66,9 @@ RUN sed -i -r 's/(post_max_size) =.*/\1 = 50M/' $PHP_CONFIG && \
 
 # download tendaocms
 RUN curl -s -fSL $LAST_RELEASE_URL -o /tmp/$LAST_RELEASE_FILENAME && \
-    cd /tmp && unzip $LAST_RELEASE_FILENAME && \
+    cd /tmp && unzip -q $LAST_RELEASE_FILENAME && \
     rm -rf /var/www/localhost/htdocs && \
-    mv zendaopms /var/www/localhost/htdocs && \
+    mv zentaopms /var/www/localhost/htdocs && \
     chown rain.rain /var/www/localhost/htdocs/ -R && \
     sed -i -r 's/(php_*)/#\1/g' /var/www/localhost/htdocs/www/.htaccess
 
