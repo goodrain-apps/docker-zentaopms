@@ -9,7 +9,7 @@ ENV PHP_CONFIG /etc/php/php.ini
 RUN apk add --no-cache tzdata && \
     cp  /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && \
     echo "Asia/Shanghai" >  /etc/timezone && \
-    apk del tzdata
+    apk del --no-cache tzdata
 
 # add bash
 RUN apk add --no-cache bash && \
