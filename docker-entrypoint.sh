@@ -2,7 +2,7 @@
 
 Dirs="www/data module config tmp"
 PermanentDir="/data"
-AppDir="/var/www/localhost/htdocs/"
+AppDir="/var/www/localhost/htdocs"
 UserCfg="${PermanentDir}/config/my.php"
 InstallFile="${AppDir}/www/install.php"
 UpgradeFile="${AppDir}/www/upgrade.php"
