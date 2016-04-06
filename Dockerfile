@@ -20,7 +20,7 @@ RUN docker-php-ext-install opcache bz2 mcrypt mysql mysqli pdo_mysql sockets
 
 
 # modify apache config
-RUN echo "ServerName localhost:80" $APACHE_CONFIG && \
+RUN echo "ServerName localhost:80" >> $APACHE_CONFIG && \
     sed -i -r 's/(User) www-data/\1 rain/' $APACHE_CONFIG && \
     sed -i -r 's/(Group) www-data/\1 rain/' $APACHE_CONFIG && \
     sed -i -r 's#(Directory) /var/www/#\1 /app/www#g' $APACHE_CONFIG && \
