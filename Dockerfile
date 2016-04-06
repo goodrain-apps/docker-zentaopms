@@ -26,7 +26,7 @@ RUN echo "ServerName localhost:80" >> $APACHE_CONFIG && \
     sed -i -r 's#(Directory) /var/www/#\1 /app/www#g' $APACHE_CONFIG && \
     sed -i -r 's#(DocumentRoot) .*#\1 /app/www#' $APACHE_CONFIG && \ 
     sed -i -r 's#(AllowOverride) None#\1 All#g' $APACHE_CONFIG && \
-    ln -s /etc/apache2/mods-available/rewrite.load /etc/apache2/mods-enabled/ 
+    a2enmod rewrite && a2enmod rewrite && a2dismod status
 
 # modify php config
 RUN cp /usr/src/php/php.ini-production $PHP_CONFIG && \
