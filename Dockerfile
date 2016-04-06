@@ -11,8 +11,9 @@ RUN apk add --no-cache tzdata && \
     echo "Asia/Shanghai" >  /etc/timezone && \
     apk del --no-cache tzdata
 
-# add bash
-RUN apk add --no-cache bash && \
+# add bash and libc6-compat
+RUN apk add --no-cache bash libc6-compat && \
+    ln -s /lib /lib64 && \
     sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
 
 
