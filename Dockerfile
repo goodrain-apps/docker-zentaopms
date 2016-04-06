@@ -13,7 +13,7 @@ RUN groupadd -g 200 -r rain && useradd -r -g rain -u 200 rain
 
 # Install required libraries
 RUN apt-get update && \
-    apt-get install -y libbz2-dev libmcrypt-dev
+    apt-get install -y libbz2-dev libmcrypt-dev unzip wget
     
 # Install extensions
 RUN docker-php-ext-install opcache bz2 mcrypt mysql mysqli pdo_mysql sockets
