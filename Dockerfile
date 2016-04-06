@@ -53,12 +53,13 @@ RUN apk add --no-cache apache2=2.4.17-r4 \
 RUN sed -i -r 's/#(ServerName) .*/\1 localhost:80/' $APACHE_CONFIG && \
     sed -i -r 's/(User) apache/\1 rain/' $APACHE_CONFIG && \
     sed -i -r 's/(Group) apache/\1 rain/' $APACHE_CONFIG && \
-    sed -i -r 's#(/var/www/localhost/htdocs)#\1/www#g' $APACHE_CONFIG && \
+    sed -i -r 's#(/var/www/localhost/htdocs)#/app/www#g' $APACHE_CONFIG && \
     sed -i -r 's#(Options) Indexes (FollowSymLinks)#\1 \2#' $APACHE_CONFIG && \ 
     sed -i -r 's#(AllowOverride) None#\1 All#g' $APACHE_CONFIG && \
     sed -i -r 's#(ErrorLog) logs/error.log#\1 /dev/stderr#' $APACHE_CONFIG && \
     sed -i -r 's#(CustomLog) logs/access.log (combined)#\1 /dev/stdout \2#' $APACHE_CONFIG && \
-    sed -i -r 's/#(LoadModule rewrite_module .*)/\1/' $APACHE_CONFIG
+    sed -i -r 's/#(LoadModule rewrite_module .*)/\1/' $APACHE_CONFIG && \
+    mkdir /run/apache2/ && chown rain.rain /run/apache2/
 
 # modify php config
 RUN sed -i -r 's/(post_max_size) =.*/\1 = 50M/' $PHP_CONFIG && \
@@ -70,12 +71,11 @@ RUN sed -i -r 's/(post_max_size) =.*/\1 = 50M/' $PHP_CONFIG && \
 # download tendaocms
 RUN curl -s -fSL $LAST_RELEASE_URL -o /tmp/$LAST_RELEASE_FILENAME && \
     cd /tmp && unzip -q $LAST_RELEASE_FILENAME && \
-    rm -rf /var/www/localhost/htdocs && \
-    mv zentaopms /var/www/localhost/htdocs && \
-    chown rain.rain /var/www/localhost/htdocs/ -R && \
-    sed -i -r 's/(php_*)/#\1/g' /var/www/localhost/htdocs/www/.htaccess
+    mv zentaopms /app && \
+    chown rain.rain /app -R && \
+    sed -i -r 's/(php_*)/#\1/g' /app/www/.htaccess
 
-WORKDIR /var/www/localhost/htdocs
+WORKDIR /app
 
 VOLUME /data
 
