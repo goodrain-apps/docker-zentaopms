@@ -33,7 +33,8 @@ RUN cp /usr/src/php/php.ini-production $PHP_CONFIG && \
     sed -i -r 's/(post_max_size) =.*/\1 = 50M/' $PHP_CONFIG && \
     sed -i -r 's/(upload_max_filesize) =.*/\1 = 50M/' $PHP_CONFIG && \
     sed -i -r 's/; (max_input_vars) =.*/\1 = 3000/' $PHP_CONFIG && \
-    sed -i -r 's#;(date.timezone) =.*#\1 = Asia/Shanghai#' $PHP_CONFIG
+    sed -i -r 's#;(date.timezone) =.*#\1 = Asia/Shanghai#' $PHP_CONFIG && \
+    sed -i -r 's#;(session.save_path) = .*#\1 = "/dev/shm"#' $PHP_CONFIG
 
 # download tendaocms
 RUN curl -s -fSL $LAST_RELEASE_URL -o /tmp/$LAST_RELEASE_FILENAME && \
