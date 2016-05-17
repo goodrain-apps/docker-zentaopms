@@ -1,0 +1,16 @@
+FROM alpine:3.3
+
+ENV ZENDAO_VERSION zentaopms_8.2.beta_20160504
+ENV APACHE_CONFIG /etc/apache2/httpd.conf
+ENV PHP_CONFIG /etc/php/php.ini
+
+# change timezone to Asia/Shanghai
+RUN apk add --no-cache tzdata && \
+    cp  /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && \
+    echo "Asia/Shanghai" >  /etc/timezone && \
+    apk del --no-cache tzdata
+
+# add bash and libc6-compat
+RUN apk add --no-cache bash libc6-compat && \
+    ln -s /lib /lib64 && \
+    sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
