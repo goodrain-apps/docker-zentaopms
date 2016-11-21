@@ -18,9 +18,9 @@ RUN apk add --no-cache tzdata bash libc6-compat && \
 
 
 # install apache2 and php
-RUN apk add --no-cache apache2=2.4.17-r4 \
-    apache2-utils=2.4.17-r4 \
-    php=5.6.20-r0 \
+RUN apk add --no-cache apache2\
+    apache2-utils \
+    php \
     php-apache2 \
     php-bz2 \
     php-ctype \
