@@ -1,25 +1,20 @@
 FROM alpine:3.3
 
-ENV LAST_RELEASE_URL http://dl.cnezsoft.com/zentao/8.1.3/ZenTaoPMS.8.1.3.zip
-ENV LAST_RELEASE_FILENAME ZenTaoPMS.8.1.3
+ENV LAST_RELEASE_URL http://dl.cnezsoft.com/zentao/8.3.1/ZenTaoPMS.8.3.1.zip
+ENV LAST_RELEASE_FILENAME ZenTaoPMS.8.3.1
 ENV APACHE_CONFIG /etc/apache2/httpd.conf
 ENV PHP_CONFIG /etc/php/php.ini
 
 # change timezone to Asia/Shanghai
-RUN apk add --no-cache tzdata && \
+# add bash libc package
+RUN apk add --no-cache tzdata bash libc6-compat && \
     cp  /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && \
     echo "Asia/Shanghai" >  /etc/timezone && \
-    apk del --no-cache tzdata
-
-# add bash and libc6-compat
-RUN apk add --no-cache bash libc6-compat && \
     ln -s /lib /lib64 && \
-    sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd
-
-
-# add rain user and group (addgroup -g 200 -S rain)
-RUN sed -i -r 's/nofiles/rain/' /etc/group && \
-    adduser -u 200 -D -S -G rain rain
+    sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd && \
+    sed -i -r 's/nofiles/apache/' /etc/group && \
+    adduser -u 200 -D -S -G apache apache && \
+    apk del --no-cache tzdata
 
 
 # install apache2 and php
@@ -51,15 +46,13 @@ RUN apk add --no-cache apache2=2.4.17-r4 \
 
 # modify apache config
 RUN sed -i -r 's/#(ServerName) .*/\1 localhost:80/' $APACHE_CONFIG && \
-    sed -i -r 's/(User) apache/\1 rain/' $APACHE_CONFIG && \
-    sed -i -r 's/(Group) apache/\1 rain/' $APACHE_CONFIG && \
     sed -i -r 's#(/var/www/localhost/htdocs)#/app/www#g' $APACHE_CONFIG && \
     sed -i -r 's#(Options) Indexes (FollowSymLinks)#\1 \2#' $APACHE_CONFIG && \ 
     sed -i -r 's#(AllowOverride) None#\1 All#g' $APACHE_CONFIG && \
     sed -i -r 's#(ErrorLog) logs/error.log#\1 /dev/stderr#' $APACHE_CONFIG && \
     sed -i -r 's#(CustomLog) logs/access.log (combined)#\1 /dev/stdout \2#' $APACHE_CONFIG && \
     sed -i -r 's/#(LoadModule rewrite_module .*)/\1/' $APACHE_CONFIG && \
-    mkdir /run/apache2/ && chown rain.rain /run/apache2/
+    mkdir /run/apache2/ && chown apache.apache /run/apache2/
 
 # modify php config
 RUN sed -i -r 's/(post_max_size) =.*/\1 = 50M/' $PHP_CONFIG && \
@@ -72,7 +65,7 @@ RUN sed -i -r 's/(post_max_size) =.*/\1 = 50M/' $PHP_CONFIG && \
 RUN curl -s -fSL $LAST_RELEASE_URL -o /tmp/$LAST_RELEASE_FILENAME && \
     cd /tmp && unzip -q $LAST_RELEASE_FILENAME && \
     mv zentaopms /app && \
-    chown rain.rain /app -R && \
+    chown apache.apache /app -R && \
     sed -i -r 's/(php_*)/#\1/g' /app/www/.htaccess
 
 WORKDIR /app
