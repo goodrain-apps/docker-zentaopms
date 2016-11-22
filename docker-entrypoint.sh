@@ -1,5 +1,7 @@
 #!/bin/bash
 
+[ $DEBUG ] && set -x
+
 Dirs="www/data module config tmp"
 PermanentDir="/data"
 AppDir="/app"
