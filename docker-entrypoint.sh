@@ -34,9 +34,5 @@ if [ -f $UserCfg ];then
   [ -f $UpgradeFile ] && rm -f $UpgradeFile
 fi
 
-# 判断是否有RESETPASS变量
-[ $RESETPASS ] && touch $RESETPASS
-
-
 # run apache
 apachectl -DFOREGROUND
