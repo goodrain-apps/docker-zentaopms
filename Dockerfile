@@ -1,7 +1,7 @@
 FROM alpine:3.3
 
-ENV LAST_RELEASE_URL http://dl.cnezsoft.com/zentao/8.3.1/ZenTaoPMS.8.3.1.zip
-ENV LAST_RELEASE_FILENAME ZenTaoPMS.8.3.1
+ENV LAST_RELEASE_URL http://dl.cnezsoft.com/zentao/8.4/ZenTaoPMS.8.4.stable.zip
+ENV LAST_RELEASE_FILENAME ZenTaoPMS.8.4.stable.zip
 ENV APACHE_CONFIG /etc/apache2/httpd.conf
 ENV PHP_CONFIG /etc/php/php.ini
 
