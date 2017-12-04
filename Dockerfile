@@ -3,7 +3,7 @@ FROM goodrainapps/alpine:3.6
 ENV LAST_RELEASE_URL http://dl.cnezsoft.com/zentao/9.6.2/ZenTaoPMS.9.6.2.zip
 ENV LAST_RELEASE_FILENAME ZenTaoPMS.9.6.2.zip
 ENV APACHE_CONFIG /etc/apache2/httpd.conf
-ENV PHP_CONFIG /etc/php/php.ini
+ENV PHP_CONFIG /etc/php5/php.ini
 
 # change timezone to Asia/Shanghai
 # add bash libc package
