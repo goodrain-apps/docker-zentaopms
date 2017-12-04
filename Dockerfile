@@ -20,29 +20,29 @@ RUN apk add --no-cache tzdata bash libc6-compat && \
 # install apache2 and php
 RUN apk add --no-cache apache2\
     apache2-utils \
-    php \
-    php-apache2 \
-    php-bz2 \
-    php-ctype \
-    php-curl \
-    php-curl \
-    php-dom \
-    php-iconv \
-    php-json \
-    php-mcrypt \
-    php-mysql \
-    php-mysqli \
-    php-opcache \
-    php-openssl \
-    php-pdo \
-    php-pdo_mysql \
-    php-phar \
-    php-posix \
-    php-sockets \
-    php-xml \
-    php-xmlreader \
-    php-zip \
-    php-zlib 
+    php5 \
+    php5-apache2 \
+    php5-bz2 \
+    php5-ctype \
+    php5-curl \
+    php5-curl \
+    php5-dom \
+    php5-iconv \
+    php5-json \
+    php5-mcrypt \
+    php5-mysql \
+    php5-mysqli \
+    php5-opcache \
+    php5-openssl \
+    php5-pdo \
+    php5-pdo_mysql \
+    php5-phar \
+    php5-posix \
+    php5-sockets \
+    php5-xml \
+    php5-xmlreader \
+    php5-zip \
+    php5-zlib 
 
 # modify apache config
 RUN sed -i -r 's/#(ServerName) .*/\1 localhost:80/' $APACHE_CONFIG && \
