@@ -7,10 +7,9 @@ ENV PHP_CONFIG /etc/php/php.ini
 
 # change timezone to Asia/Shanghai
 # add bash libc package
-RUN apk add --no-cache tzdata bash libc6-compat && \
+RUN apk add --no-cache tzdata bash && \
     cp  /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime && \
     echo "Asia/Shanghai" >  /etc/timezone && \
-    ln -s /lib /lib64 && \
     sed -i -e "s/bin\/ash/bin\/bash/" /etc/passwd && \
     sed -i -r 's/nofiles/apache/' /etc/group && \
     adduser -u 200 -D -S -G apache apache && \
